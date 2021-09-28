@@ -25,7 +25,8 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - name: Install package dependencies
         run:
-          Rscript -e "install.packages(c('mgcv','rerddap','dplyr','lubridate', 'sp','tidyr','purrr', 'sessioninfo'), dependencies=TRUE)"
+        Rscript -e "install.packages(c('crul','dplyr','data.table','jsonlite','xml2','digest','ncdf4','tibble','hoardr', 'rerddap','sessioninfo'))"
+          #Rscript -e "install.packages(c('mgcv','rerddap','dplyr','lubridate', 'sp','tidyr','purrr', 'sessioninfo'), dependencies=TRUE)"
       - name: Create species specific indices
         run:
           Rscript -e "source('code/gen_index.R')"
