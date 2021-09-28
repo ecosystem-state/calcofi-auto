@@ -16,7 +16,7 @@ name: R-CMD-check
 
 jobs:
   gen-index:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
@@ -26,9 +26,9 @@ jobs:
       - name: Install package dependencies
         run:
           Rscript -e "install.packages('remotes')"
-      - name: Install rerddap
-        run:
-          Rscript -e "remotes::install_github('ropensci/rerddap')"
+      # - name: Install rerddap
+      #   run:
+      #     Rscript -e "remotes::install_github('ropensci/rerddap')"
       - name: Create species specific indices
         run:
           Rscript -e "source('code/gen_index.R')"
