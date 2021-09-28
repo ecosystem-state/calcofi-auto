@@ -1,9 +1,9 @@
-library(tidyverse)
 library(mgcv)
 library(rerddap)
+library(dplyr)
 library(lubridate)
 library(sp)
-
+library(tidyverse)
 # settings
 top_species <- 50
 pred_resolution <- 5 # resolution of prediction grid, km
