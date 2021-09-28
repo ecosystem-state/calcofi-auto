@@ -1,7 +1,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/ecosystem-state/calcofi-auto/workflows/R-CMD-check/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
+[![R-make-indices](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-indices/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
 <!-- badges: end -->
 
 ## Overview
