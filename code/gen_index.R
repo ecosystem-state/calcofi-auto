@@ -1,10 +1,10 @@
-library(mgcv)
-#library(rerddap)
-library(dplyr)
-library(lubridate)
-library(sp)
-library(tidyr)
-library(purrr)
+#library(mgcv)
+library(rerddap)
+#library(dplyr)
+#library(lubridate)
+#library(sp)
+#library(tidyr)
+#library(purrr)
 # settings
 # top_species <- 50
 # pred_resolution <- 5 # resolution of prediction grid, km
