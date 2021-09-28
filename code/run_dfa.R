@@ -24,7 +24,7 @@ fit <- fit_dfa(y = dat,
                  data_shape="long",
                  trend_model = "ps",
                  n_knots = 20,
-                 iter=2000,
+                 iter=3000,
                  chains=3)
 r <- rotate_trends(fit)
 
