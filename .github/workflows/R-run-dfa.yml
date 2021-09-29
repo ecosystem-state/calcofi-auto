@@ -3,7 +3,7 @@
 on:
   push:
        paths:
-       - 'code/run_dfa.r'
+       - 'code/run_dfa.R'
 
 name: R-run-dfa
 
