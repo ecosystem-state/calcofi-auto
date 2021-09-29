@@ -42,7 +42,7 @@ dat$yday <- lubridate::yday(dat$date)
 dat <- dplyr::filter(dat, year >= min_year)
 
 dat = dplyr::filter(dat,
-                    scientific_name == unique(scientific_name)[1])
+                    scientific_name == unique(dat$scientific_name)[1])
 dat$latitude <- as.numeric(dat$latitude)
 dat$longitude <- as.numeric(dat$longitude)
 
