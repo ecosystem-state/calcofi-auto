@@ -142,3 +142,4 @@ saveRDS(all_pred, "indices/predicted_indices.rds")
 # stations <- dplyr::rename(stations, station = Station)
 # dat <- dplyr::left_join(dat, stations[, c("station", "StaType")])
 # dat <- dplyr::filter(dat, StaType == "ROS")
+
