@@ -81,6 +81,12 @@ for (i in 1:length(unique_files)) {
   dat$larvae_10m2 <- as.numeric(dat$larvae_10m2)
   dat$larvae_10m2[which(is.na(dat$larvae_10m2))] <- 0
 
+  # remove species with 0 records
+  dat = dplyr::group_by(dat, scientific_name) %>%
+    dplyr::mutate(tot = sum(larvae_10m2)) %>%
+    dplyr::filter(tot>0) %>%
+    dplyr::select(-tot)
+
   # expand predicted grid to have separate rows for each spp
   new_grid <- expand.grid("scientific_name"=unique(dat$scientific_name),
               "station"=unique(pred_grid$station))
