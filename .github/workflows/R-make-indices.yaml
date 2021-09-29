@@ -5,11 +5,11 @@ on:
   #    # * is a special character in YAML so you have to quote this string
     - cron:  '0 0 1 1,4,7,10 *'
   push:
-       paths:
-       - 'indices/pred_grid.rds'
-       - 'code/set_control_params.R'
-       - 'code/gen_index_by_spp.R'
-    branches: [main, master]
+    #    paths:
+    #    - 'indices/pred_grid.rds'
+    #    - 'code/set_control_params.R'
+    #    - 'code/gen_index_by_spp.R'
+    # branches: [main, master]
   #pull_request:
     #branches: [main, master]
 
