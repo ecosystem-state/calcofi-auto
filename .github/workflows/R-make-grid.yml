@@ -15,7 +15,7 @@ on:
 name: R-make-grid
 
 jobs:
-  gen-index:
+  gen-grid:
     runs-on: macos-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -26,9 +26,6 @@ jobs:
       - name: Install package dependencies
         run:
           Rscript -e "install.packages(c('remotes','rerddap','dplyr','lubridate','sf','sessioninfo'))"
-      # - name: Install rerddap
-      #   run:
-      #     Rscript -e "remotes::install_github('ropensci/rerddap')"
       - name: Create prediction grid
         run:
           Rscript -e "source('code/gen_pred_grid.R')"
@@ -37,9 +34,6 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git diff-index --quiet HEAD || (git commit -a -m'[bot] update files' --allow-empty && git push -f)
-#          git add indices/pred_grid.rds
-#          git commit -m 'Re-build grid'
-#          git push origin
       - name: Session info
         run: |
           options(width = 100)

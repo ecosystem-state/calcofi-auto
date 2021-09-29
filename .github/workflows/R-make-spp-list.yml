@@ -15,7 +15,7 @@ on:
 name: R-make-spp-list
 
 jobs:
-  gen-index:
+  gen-spp-list:
     runs-on: macos-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -26,9 +26,6 @@ jobs:
       - name: Install package dependencies
         run:
           Rscript -e "install.packages(c('remotes','rerddap','dplyr','lubridate','sessioninfo'))"
-      # - name: Install rerddap
-      #   run:
-      #     Rscript -e "remotes::install_github('ropensci/rerddap')"
       - name: Create spp list
         run:
           Rscript -e "source('code/gen_spp_list.R')"
@@ -36,11 +33,7 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-#          git fetch origin main
           git diff-index --quiet HEAD || (git commit -a -m'[bot] update files' --allow-empty && git push -f)
-#          git add indices/tot_cpue_species.rds
-#          git commit -m 'Re-build spp list'
-#          git push origin
       - name: Session info
         run: |
           options(width = 100)
