@@ -4,8 +4,7 @@ on:
   push:
        paths:
        - 'code/run_dfa.r'
-    branches: [main, master]
-    
+
 name: R-run-dfa
 
 jobs:
