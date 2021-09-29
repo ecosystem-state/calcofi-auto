@@ -5,7 +5,7 @@ on:
        paths:
        - 'code/run_test.r'
 
-name: R-run-dfa
+name: R-run-test
 
 jobs:
   run-dfa:
