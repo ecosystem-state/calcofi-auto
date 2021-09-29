@@ -2,8 +2,12 @@
 
 <!-- badges: start --> [![Make
 grid](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-grid/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
+
 [![Species
 list](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-spp-list/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
+
+[![Estimate
+densities](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-indices/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
 <!-- badges: end -->
 
 ## Overview
