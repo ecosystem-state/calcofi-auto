@@ -7,7 +7,7 @@ on:
   push:
        paths:
        - 'code/set_control_params.R'
-
+       - 'code/gen_pred_grid.R'
     #branches: [main, master]
   #pull_request:
     #branches: [main, master]

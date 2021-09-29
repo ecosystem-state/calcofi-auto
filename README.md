@@ -1,6 +1,8 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<!-- badges: start --> [![Make
+<!-- badges: start -->
+
+[![Make
 grid](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-grid/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
 
 [![Species
