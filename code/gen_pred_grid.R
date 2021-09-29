@@ -75,5 +75,4 @@ station_df$longitude <- as.numeric(unlist(lapply(strsplit(as.character(station_d
 station_df$latitude <- as.numeric(unlist(lapply(strsplit(as.character(station_df$station), " "), getElement, 2)))
 pred_grid <- dplyr::left_join(pred_grid, station_df)
 
-pred_grid = data.frame(x=1)
 saveRDS(pred_grid, "indices/pred_grid.rds")
