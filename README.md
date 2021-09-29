@@ -10,6 +10,9 @@ list](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-spp-list/
 
 [![Estimate
 densities](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-indices/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
+
+[![Run DFA
+models](https://github.com/ecosystem-state/calcofi-auto/workflows/R-run-dfa/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
 <!-- badges: end -->
 
 ## Overview
