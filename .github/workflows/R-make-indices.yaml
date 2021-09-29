@@ -4,7 +4,7 @@ on:
   schedule:
   #    # * is a special character in YAML so you have to quote this string
     - cron:  '0 0 1 1,4,7,10 *'
-  push:
+#  push:
     #    paths:
     #    - 'indices/pred_grid.rds'
     #    - 'code/set_control_params.R'
