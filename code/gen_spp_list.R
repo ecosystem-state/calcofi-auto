@@ -3,7 +3,7 @@ library(dplyr)
 library(lubridate)
 
 # settings
-min_year <- 1985
+source("code/set_control_params.R")
 #
 # list of all datasets
 calcofi_erddap <- c(

@@ -3,8 +3,7 @@ library(dplyr)
 library(lubridate)
 library(sf)
 
-pred_resolution <- 5 # resolution of prediction grid, km
-min_year <- 1985
+source("code/set_control_params.R")
 
 # list of all datasets
 calcofi_erddap <- c(
