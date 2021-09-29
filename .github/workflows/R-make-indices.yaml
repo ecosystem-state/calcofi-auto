@@ -4,11 +4,11 @@ on:
   schedule:
   #    # * is a special character in YAML so you have to quote this string
     - cron:  '0 0 1 1,4,7,10 *'
-#  push:
-    #    paths:
-    #    - 'indices/pred_grid.rds'
-    #    - 'code/set_control_params.R'
-    #    - 'code/gen_index_by_spp.R'
+  push:
+        paths:
+        - 'indices/pred_grid.rds'
+        - 'code/set_control_params.R'
+        - 'code/gen_index_by_spp.R'
     # branches: [main, master]
   #pull_request:
     #branches: [main, master]
@@ -32,8 +32,8 @@ jobs:
           Rscript -e "source('code/gen_index_by_spp.R')"
       - name: Commit results
         run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git diff-index --quiet HEAD || (git commit -a -m'[bot] update files' --allow-empty && git push -f)
       - name: Session info
         run: |
