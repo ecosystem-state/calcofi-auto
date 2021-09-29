@@ -1,3 +1,4 @@
+# Parameters that apply to multiple scripts
 min_year <- 1985
 pred_resolution <- 5 # resolution of prediction grid, km
 top_species <- 50
