@@ -25,20 +25,15 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - name: Install package dependencies
         run:
-          Rscript -e "install.packages(c('remotes','rerddap','mgcv','dplyr','lubridate','sp','tidyr','purrr'))"
-      # - name: Install rerddap
-      #   run:
-      #     Rscript -e "remotes::install_github('ropensci/rerddap')"
+          Rscript -e "install.packages(c('remotes','rerddap','mgcv','dplyr','lubridate','sf','tidyr','purrr','sessioninfo'))"
       - name: Create species specific indices
         run:
-          Rscript -e "source('code/gen_index.R')"
+          Rscript -e "source('code/gen_index_by_spp.R')"
       - name: Commit results
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add predicted_indices.rds
-          git commit -m 'Re-build indices'
-          git push origin
+          git diff-index --quiet HEAD || (git commit -a -m'[bot] update files' --allow-empty && git push -f)
       - name: Session info
         run: |
           options(width = 100)
