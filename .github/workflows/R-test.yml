@@ -3,7 +3,7 @@
 on:
   push:
     paths:
-    - 'run_test.r'
+    - 'run_test.R'
 
 name: R-run-test
 
