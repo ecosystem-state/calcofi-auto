@@ -25,7 +25,7 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - name: Install package dependencies
         run:
-          Rscript -e "install.packages(c('remotes','rerddap','dplyr','lubridate','sp'))"
+          Rscript -e "install.packages(c('remotes','rerddap','dplyr','lubridate','sf'))"
       # - name: Install rerddap
       #   run:
       #     Rscript -e "remotes::install_github('ropensci/rerddap')"
