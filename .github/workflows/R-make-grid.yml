@@ -29,14 +29,14 @@ jobs:
       # - name: Install rerddap
       #   run:
       #     Rscript -e "remotes::install_github('ropensci/rerddap')"
-      - name: Create species specific indices
+      - name: Create prediction grid
         run:
           Rscript -e "source('code/gen_pred_grid.R')"
       - name: Commit results
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add pred_grid.rds
+          git add indices/pred_grid.rds
           git commit -m 'Re-build grid'
           git push origin
       - name: Session info
