@@ -3,7 +3,7 @@
 on:
   push:
     paths:
-    - 'run_test.R'
+    - 'code/run_test.R'
 
 name: R-run-test
 
@@ -21,7 +21,7 @@ jobs:
           Rscript -e "install.packages(c('sessioninfo'))"
       - name: Run DFA models
         run:
-          Rscript -e "source('run_test.R')"
+          Rscript -e "source('code/run_test.R')"
       - name: Commit results
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
