@@ -47,5 +47,27 @@ dat = dplyr::filter(dat,
 dat$latitude <- as.numeric(dat$latitude)
 dat$longitude <- as.numeric(dat$longitude)
 
+# convert to UTM - kms
+sp::coordinates(dat) <- c("longitude", "latitude")
+sp::proj4string(dat) <- sp::CRS("+proj=longlat + ellps=WGS84 +datum=WGS84")
+dat <- try(sp::spTransform(dat, CRS = "+proj=utm +zone=10 +datum=WGS84"),
+           silent = TRUE
+)
+dat <- as.data.frame(dat)
+dat$longitude <- dat$longitude / 1000
+dat$latitude <- dat$latitude / 1000
+
+# come up with prediction grid
+resolution <- pred_resolution
+dat$floor_lon <- floor(dat$longitude / resolution)
+dat$floor_lat <- floor(dat$latitude / resolution)
+dat$station <- paste(dat$floor_lon, dat$floor_lat)
+#
+pred_grid <- expand.grid(
+  station = unique(dat$station),
+  season = 2,
+  year = unique(dat$year)
+)
+
 pred_grid = data.frame(x=1)
 saveRDS(pred_grid, "indices/pred_grid.rds")
