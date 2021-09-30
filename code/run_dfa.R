@@ -29,14 +29,14 @@ fit <- fit_dfa(y = dat,
 r <- rotate_trends(fit)
 
 # Make plot of trends
-jpeg("figures/trends.jpeg",quality=100)
+jpeg("figures/trends.jpeg", quality=100)
 plot_trends(r, years = unique(dat$year)) +
   theme_bw() +
   theme(strip.background =element_rect(fill="white"))
 dev.off()
 
 # Make plot of loadings
-jpeg("figures/loadings.jpeg",quality=100,height = 480*1.5, width=480*1.1)
+jpeg("figures/loadings.jpeg", quality=100, height = 480*1.5, width=480*1.1)
 plot_loadings(r, names = unique(dat$species)) +
   theme_bw() +
   scale_fill_viridis_d(end=0.8) +
@@ -53,7 +53,7 @@ for(i in 1:length(abbr_names)) {
 }
 
 # Make plot of fitted
-jpeg("figures/fitted.jpeg",quality=100, height = 480, width = 480*1.5)
+jpeg("figures/fitted.jpeg", quality=100, height = 480, width = 480*1.5)
 plot_fitted(fit, names = abbr_names, time_labels = unique(dat$year)) +
   theme_bw() +
   scale_fill_viridis_d(end=0.8) +
