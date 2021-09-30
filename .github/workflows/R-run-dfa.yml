@@ -6,8 +6,11 @@ on:
     - cron:  '0 0 1 1,4,7,10 *'
   push:
         paths:
-       - 'code/run_dfa.R'
-       - 'indices/predicted_indices.rds'
+        - 'indices/predicted_indices.rds'
+        - 'code/run_dfa.R'
+    # branches: [main, master]
+  #pull_request:
+    #branches: [main, master]
 
 name: R-run-dfa
 
