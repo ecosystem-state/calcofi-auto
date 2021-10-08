@@ -28,6 +28,8 @@ fit <- fit_dfa(y = dat,
                  chains=3)
 r <- rotate_trends(fit)
 
+spp_names = levels(as.factor(fit$orig_data$name))
+
 # Make plot of trends
 jpeg("figures/trends.jpeg", quality=100)
 plot_trends(r, years = unique(dat$year)) +
@@ -37,14 +39,14 @@ dev.off()
 
 # Make plot of loadings
 jpeg("figures/loadings.jpeg", quality=100, height = 480*1.5, width=480*1.1)
-plot_loadings(r, names = unique(dat$species)) +
+plot_loadings(r, names = spp_names) +
   theme_bw() +
   scale_fill_viridis_d(end=0.8) +
   theme(strip.background =element_rect(fill="white"))
 dev.off()
 
 # Make abbreviated names for plots
-abbr_names <- unique(dat$species)
+abbr_names <- spp_names
 for(i in 1:length(abbr_names)) {
   genus_spp <- strsplit(abbr_names[i]," ")
   if(length(unlist(genus_spp)) == 2) {
