@@ -28,7 +28,9 @@ fit <- fit_dfa(y = dat,
                  chains=3)
 r <- rotate_trends(fit)
 
-spp_names = levels(as.factor(fit$orig_data$name))
+trends <- dfa_trends(r, years = sort(unique(fit$orig_data$year)))
+write.csv(trends, file = "indices/estimated_trends.csv", row.names = FALSE)
+spp_names = levels(as.factor(fit$orig_data$species))
 
 # Make plot of trends
 jpeg("figures/trends.jpeg", quality=100)
