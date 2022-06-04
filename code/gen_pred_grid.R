@@ -58,6 +58,15 @@ dat <- as.data.frame(dat)
 dat$longitude <- dat$longitude / 1000
 dat$latitude <- dat$latitude / 1000
 
+dat$season <- NA
+dat$season[which(dat$yday %in% 2:52)] <- 1
+dat$season[which(dat$yday %in% 90:141)] <- 2
+dat$season[which(dat$yday %in% 181:233)] <- 3
+dat$season[which(dat$yday %in% 273:325)] <- 4
+dat <- dplyr::filter(dat,!is.na(season))
+dat$season <- as.factor(dat$season)
+dat <- dplyr::filter(dat, season %in% use_seasons)
+
 # come up with prediction grid
 resolution <- pred_resolution
 dat$floor_lon <- floor(dat$longitude / resolution)
