@@ -17,6 +17,7 @@ tot_cpue <- tot_cpue[1:top_species,]
 # load prediction grid
 pred_grid <- readRDS("indices/pred_grid.rds")
 pred_grid$season <- 2
+pred_grid$yday <- 105 # Apr 15
 
 # model function - edit to change form of model
 # gam_fit <- function(df) {
@@ -98,14 +99,16 @@ for (i in 1:length(unique_files)) {
   if (nrow(dat) > 0) {
     for(spp in 1:length(unique(dat$scientific_name))) {
 
+      # fit sdmTMB model
+      newdat = dplyr::filter(dat, scientific_name==unique(dat$scientific_name)[spp])
+
       if(i==1 & spp == 1) {
         mesh = make_mesh(newdat, xy_cols = c("longitude","latitude"),
                          cutoff = 75)
       }
-      # fit sdmTMB model
-      newdat = dplyr::filter(dat, scientific_name==unique(dat$scientific_name)[spp])
 
-      m <- sdmTMB(larvae_10m2 ~ -1 + as.factor(year),
+      newdat$fyear = as.factor(newdat$year)
+      m <- sdmTMB(larvae_10m2 ~ -1 + fyear + s(yday),
                   spatiotemporal = "IID",
                   time="year",
                   spatial="on",
@@ -113,7 +116,10 @@ for (i in 1:length(unique_files)) {
                   mesh=mesh,
                   data=newdat)
 
-      pred = predict(m, pred_grid, return_tmb_object = TRUE)
+      pred_grid$fyear <- as.factor(pred_grid$year)
+      pred = predict(m,
+                     pred_grid,
+                     return_tmb_object = TRUE)
       index = get_index(pred) # note bias correction not used
 
       summaries <- dplyr::rename(dat, species = scientific_name) %>%
