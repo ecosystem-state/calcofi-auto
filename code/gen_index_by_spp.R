@@ -20,7 +20,7 @@ pred_grid$season <- 2
 
 # model function - edit to change form of model
 gam_fit <- function(df) {
-  gam(larvae_10m2 ~ as.factor(year) + s(latitude, longitude, by = year),
+  gam(larvae_10m2 ~ s(yday,bs="ps") + as.factor(year) + s(latitude, longitude, by = year),
       data = df,
       family = tw()
   )
@@ -68,7 +68,14 @@ for (i in 1:length(unique_files)) {
   dat$season[which(dat$yday %in% 273:325)] <- 4
   dat <- dplyr::filter(dat,!is.na(season))
   dat$season <- as.factor(dat$season)
-  dat <- dplyr::filter(dat, season == 2)
+  dat <- dplyr::filter(dat, season %in% use_seasons)
+
+
+  stations <- read.csv("data/CalCOFIStationOrder.csv")
+  stations <- dplyr::rename(stations, station = Station)
+  dat <- dplyr::left_join(dat, stations[, c("station", "StaType")])
+  dat <- dplyr::filter(dat, StaType == "ROS") %>%
+    dplyr::select(-StaType)
 
   # convert to UTM - kms
   # make the UTM cols spatial (X/Easting/lon, Y/Northing/lat)
@@ -144,6 +151,15 @@ for (i in 1:length(unique_files)) {
     }
   }
 }
+
+# filter out species with < 100 observations
+all_pred <- dplyr::group_by(all_pred, species) %>%
+  dplyr::mutate(npos = sum(n_pos_cpue)) %>%
+  dplyr::filter(npos > 100) %>%
+  dplyr::select(-npos)
+all_pred <- dplyr::filter(all_pred, species %in% c("Disintegrated fish larvae",
+                                                   "Argyropelecus sladeni",
+                                                   "Lestidiops ringens"))
 
 saveRDS(all_pred, "indices/predicted_indices.rds")
 

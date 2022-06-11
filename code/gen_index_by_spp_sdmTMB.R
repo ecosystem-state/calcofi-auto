@@ -108,11 +108,12 @@ for (i in 1:length(unique_files)) {
       }
 
       newdat$fyear = as.factor(newdat$year)
-      m <- sdmTMB(larvae_10m2 ~ -1 + fyear + s(yday),
-                  spatiotemporal = "IID",
+      newdat$present = ifelse(newdat$larvae_10m2 > 0, 1, 0)
+      m <- sdmTMB(larvae_10m2 ~ -1 + s(yday),
+                  spatiotemporal = "iid",
                   time="year",
                   spatial="on",
-                  family = tweedie(),
+                  family = binomial(),
                   mesh=mesh,
                   data=newdat)
 
