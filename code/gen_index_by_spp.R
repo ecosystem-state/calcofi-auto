@@ -17,6 +17,7 @@ tot_cpue <- tot_cpue[1:top_species,]
 # load prediction grid
 pred_grid <- readRDS("indices/pred_grid.rds")
 pred_grid$season <- 2
+pred_grid$yday <- 105
 
 # model function - edit to change form of model
 gam_fit <- function(df) {
@@ -25,6 +26,7 @@ gam_fit <- function(df) {
       family = tw()
   )
 }
+
 
 # grab data for all species
 unique_files <- unique(tot_cpue$erddap)
@@ -41,6 +43,7 @@ for (i in 1:length(unique_files)) {
       "latitude",
       "longitude",
       "station",
+      "line",
       "scientific_name",
       "time"
     )
@@ -66,16 +69,16 @@ for (i in 1:length(unique_files)) {
   dat$season[which(dat$yday %in% 90:141)] <- 2
   dat$season[which(dat$yday %in% 181:233)] <- 3
   dat$season[which(dat$yday %in% 273:325)] <- 4
-  dat <- dplyr::filter(dat,!is.na(season))
-  dat$season <- as.factor(dat$season)
+  #dat <- dplyr::filter(dat,!is.na(season))
+  #dat$season <- as.factor(dat$season)
   dat <- dplyr::filter(dat, season %in% use_seasons)
 
-
   stations <- read.csv("data/CalCOFIStationOrder.csv")
-  stations <- dplyr::rename(stations, station = Station)
-  dat <- dplyr::left_join(dat, stations[, c("station", "StaType")])
-  dat <- dplyr::filter(dat, StaType == "ROS") %>%
-    dplyr::select(-StaType)
+  stations$station_line <- paste(stations$Station, stations$Line)
+  stations <- dplyr::filter(stations, StaType == "ROS") # remove experimental
+  dat <- dplyr::mutate(dat, station_line = paste(station, line)) %>%
+    dplyr::filter(station_line %in% stations$station_line) %>%
+    dplyr::select(-station_line)
 
   # convert to UTM - kms
   # make the UTM cols spatial (X/Easting/lon, Y/Northing/lat)
@@ -153,15 +156,16 @@ for (i in 1:length(unique_files)) {
 }
 
 # filter out species with < 100 observations
-all_pred <- dplyr::group_by(all_pred, species) %>%
+all_pred2 <- dplyr::filter(all_pred, !is.na(index),
+                           species %in% c("Disintegrated fish larvae",
+                                          "Argyropelecus sladeni",
+                                          "Lestidiops ringens") == FALSE) %>%
+  dplyr::group_by(species) %>%
   dplyr::mutate(npos = sum(n_pos_cpue)) %>%
   dplyr::filter(npos > 100) %>%
   dplyr::select(-npos)
-all_pred <- dplyr::filter(all_pred, species %in% c("Disintegrated fish larvae",
-                                                   "Argyropelecus sladeni",
-                                                   "Lestidiops ringens"))
 
-saveRDS(all_pred, "indices/predicted_indices.rds")
+saveRDS(all_pred2, "indices/predicted_indices.rds")
 
 # Filter out experimental stations
 # https://calcofi.org/field-work/station-positions.html
