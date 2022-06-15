@@ -20,7 +20,7 @@ dat$ts <- as.numeric(as.factor(dat$species))
 
 # 3 trend model does a bit better than 1-2 trend models
 fit <- fit_dfa(y = dat,
-                 num_trends = 3,
+                 num_trends = 2,
                  data_shape="long",
                  trend_model = "ps",
                  n_knots = 20,
