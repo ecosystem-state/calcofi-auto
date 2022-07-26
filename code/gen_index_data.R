@@ -130,7 +130,9 @@ sub = dplyr::select(sub, -geometry, -date, -line) %>%
                                "Argyropelecus sladeni",
                                "Lestidiops ringens",
                                "Citharichthys",
-                               "Cyclothone") == FALSE)
+                               "Cyclothone",
+                               "Idiacanthus antrostomus",
+                               "Ceratoscopelus townsendi") == FALSE)
 saveRDS(sub, "data/index_data.rds")
 
 # Filter out experimental stations
