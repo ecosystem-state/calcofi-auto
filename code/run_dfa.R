@@ -2,7 +2,7 @@ library(bayesdfa)
 library(dplyr)
 library(ggplot2)
 
-dat <- readRDS("indices/predicted_indices.rds")
+dat <- readRDS("indices/predicted_indices_sdmtmb.rds")
 
 # optional - remove species with > max_zeros years with 0 cpue
 max_zeros <- 10 # number of years with missing data allowed
@@ -10,6 +10,7 @@ dat <- dplyr::group_by(dat, species) %>%
   dplyr::mutate(n = length(which(mean_cpue==0))) %>%
   dplyr::filter(n <= max_zeros)
 
+dat$index <- dat$log_est
 # turn all mean_cpue values to NAs
 dat$index[which(dat$mean_cpue==0)] = NA
 
