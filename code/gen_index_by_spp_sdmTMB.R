@@ -28,7 +28,7 @@ for(spp in 1:length(unique(dat$scientific_name))) {
     newdat <- dplyr::filter(dat,
                             scientific_name==unique(dat$scientific_name)[spp])
 
-      if(i==1 & spp == 1) {
+      if(spp == 1) {
         # 10 ~ 181 knots
         mesh = make_mesh(newdat, xy_cols = c("longitude","latitude"),
                          cutoff = 10)
@@ -57,7 +57,7 @@ for(spp in 1:length(unique(dat$scientific_name))) {
                          n_pos_cpue = length(which(larvae_10m2 > 0)))
       pred = left_join(summaries, index[,c("year","est","lwr","upr","log_est","se")])
 
-      if(i== 1 & spp == 1) {
+      if(spp == 1) {
         predictions_all = pred
       } else {
         predictions_all = rbind(predictions_all, pred)

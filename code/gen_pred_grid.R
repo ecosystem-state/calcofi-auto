@@ -1,41 +1,10 @@
-library(rerddap)
 library(dplyr)
 library(lubridate)
 library(sf)
 
 source("code/set_control_params.R")
 
-# list of all datasets
-calcofi_erddap <- c(
-  "erdCalCOFIlrvcntAtoAM"
-)
-
-# grab data for all species
-for (i in 1:length(calcofi_erddap)) {
-  out <- info(as.character(calcofi_erddap[i]))
-  # station_dat <- tabledap(out, fields = c(
-  #   "station", "line", "latitude",
-  #   "longitude", "time", "scientific_name", "larvae_10m2"
-  # ))
-  station_dat <- tabledap(out,
-    fields = c(
-      "larvae_10m2", "latitude", "longitude",
-      "station", "scientific_name", "time"
-    )
-  )
-
-  if (i == 1) {
-    dat <- station_dat
-  } else {
-    dat <- rbind(dat, station_dat)
-  }
-}
-
-dat <- as.data.frame(dat)
-dat$date <- lubridate::as_date(dat$time)
-dat$year <- lubridate::year(dat$date)
-dat$month <- lubridate::month(dat$date)
-dat$yday <- lubridate::yday(dat$date)
+dat = readRDS("data/index_data.rds")
 
 # filter out recent years with consistent sampling
 dat <- dplyr::filter(dat, year >= min_year)
@@ -48,15 +17,15 @@ dat$longitude <- as.numeric(dat$longitude)
 
 # convert to UTM - kms
 # make the UTM cols spatial (X/Easting/lon, Y/Northing/lat)
-dat <- st_as_sf(dat, coords = c("longitude", "latitude"), crs = 4326)
+#dat <- st_as_sf(dat, coords = c("longitude", "latitude"), crs = 4326)
 # transform to UTM
-dat<-st_transform(x = dat, crs = 32610)
-dat$longitude = st_coordinates(dat)[,1]
-dat$latitude = st_coordinates(dat)[,2]
+#dat<-st_transform(x = dat, crs = 32610)
+#dat$longitude = st_coordinates(dat)[,1]
+#dat$latitude = st_coordinates(dat)[,2]
 
-dat <- as.data.frame(dat)
-dat$longitude <- dat$longitude / 1000
-dat$latitude <- dat$latitude / 1000
+#dat <- as.data.frame(dat)
+#dat$longitude <- dat$longitude / 1000
+#dat$latitude <- dat$latitude / 1000
 
 dat$season <- NA
 dat$season[which(dat$yday %in% 2:52)] <- 1
@@ -79,8 +48,8 @@ pred_grid <- expand.grid(
 )
 
 station_df <- data.frame(station = unique(dat$station))
-station_df$longitude <- as.numeric(unlist(lapply(strsplit(as.character(station_df$station), " "), getElement, 1)))
-station_df$latitude <- as.numeric(unlist(lapply(strsplit(as.character(station_df$station), " "), getElement, 2)))
+station_df$longitude <- as.numeric(unlist(lapply(strsplit(as.character(station_df$station), " "), getElement, 1))) * resolution
+station_df$latitude <- as.numeric(unlist(lapply(strsplit(as.character(station_df$station), " "), getElement, 2))) * resolution
 pred_grid <- dplyr::left_join(pred_grid, station_df)
 
 saveRDS(pred_grid, "indices/pred_grid.rds")
