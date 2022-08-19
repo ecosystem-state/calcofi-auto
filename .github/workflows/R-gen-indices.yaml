@@ -29,6 +29,10 @@ jobs:
         run:
           Rscript -e "install.packages(c('remotes','dplyr','lubridate','tidyr'))"
 
+      - name: Install INLA
+        run:
+          Rscript -e "install.packages('INLA', repos=c(getOption('repos'), INLA='https://inla.r-inla-download.org/R/testing'), dep=TRUE)"
+          
       - name: Install sdmTMB
         run:
           Rscript -e "remotes::install_github('pbs-assess/sdmTMB')"
