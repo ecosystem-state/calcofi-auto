@@ -3,7 +3,7 @@
 on:
   schedule:
   #    # * is a special character in YAML so you have to quote this string
-    - cron:  '0 0 1 1,4,7,10 *'
+    - cron:  '0 0 4 1,7 *'
   push:
         paths:
         - 'indices/predicted_indices.rds'
@@ -25,7 +25,7 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - name: Install package dependencies
         run:
-          Rscript -e "install.packages(c('remotes','dplyr','bayesdfa','ggplot2','sessioninfo'))"
+          Rscript -e "install.packages(c('remotes','dplyr','bayesdfa','ggplot2'))"
       - name: Run DFA models
         run:
           Rscript -e "source('code/run_dfa.R')"
@@ -34,9 +34,3 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git diff-index --quiet HEAD || (git commit -a -m'[bot] update files' --allow-empty && git push -f)
-      - name: Session info
-        run: |
-          options(width = 100)
-          pkgs <- installed.packages()[, "Package"]
-          sessioninfo::session_info(pkgs, include_base = TRUE)
-        shell: Rscript {0}
