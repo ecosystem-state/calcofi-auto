@@ -11,6 +11,14 @@ pred_grid <- readRDS("indices/pred_grid.rds")
 pred_grid$season <- 2
 pred_grid$yday <- 105 # Apr 15
 
+# model function - edit to change form of model
+# gam_fit <- function(df) {
+#   gam(larvae_10m2 ~ as.factor(year) + s(latitude, longitude, by = year),
+#       data = df,
+#       family = tw()
+#   )
+# }
+
 dat = readRDS("data/index_data.rds")
 for(spp in 1:length(unique(dat$scientific_name))) {
     # fit sdmTMB model
