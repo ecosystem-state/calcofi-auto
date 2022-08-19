@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
   
   [![Make grid](https://github.com/ecosystem-state/calcofi-auto/workflows/R-gen-grid/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)  
   
-[![Generate indices](https://github.com/ecosystem-state/calcofi-auto/actions/workflows/R-gen-indices.yaml/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions/workflows/R-gen-indices.yaml)
+[![R-gen-index](https://github.com/ecosystem-state/calcofi-auto/actions/workflows/R-gen-indices.yaml/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions/workflows/R-gen-indices.yaml)
   
   [![Run DFA models](https://github.com/ecosystem-state/calcofi-auto/workflows/R-run-dfa/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
   <!-- badges: end -->
