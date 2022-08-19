@@ -110,6 +110,7 @@ dat <- dplyr::filter(dat, scientific_name %in% c("Disintegrated fish larvae",
                                      "Idiacanthus antrostomus",
                                      "Ceratoscopelus townsendi") == FALSE)
 
+
 # convert to UTM - kms
 # make the UTM cols spatial (X/Easting/lon, Y/Northing/lat)
 dat$latitude = dat$lat_dd = as.numeric(dat$latitude)
