@@ -1,10 +1,7 @@
 library(sdmTMB)
-library(rerddap)
 library(dplyr)
 library(lubridate)
-library(sf)
 library(tidyr)
-library(purrr)
 
 # settings
 source("code/set_control_params.R")
