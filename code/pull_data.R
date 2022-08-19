@@ -121,8 +121,8 @@ dat_coords <-
            coords = c("longitude", "latitude"),
            crs = 4326)
 dat_coords <- st_transform(x = dat_coords, crs = 32610)
-dat$longitude = st_coordinates(dat_coords)[, 1]
-dat$latitude = st_coordinates(dat_coords)[, 2]
+dat$longitude = as.numeric(st_coordinates(dat_coords)[, 1])
+dat$latitude = as.numeric(st_coordinates(dat_coords)[, 2])
 dat <- as.data.frame(dat)
 dat$longitude <- dat$longitude / 1000 # to kms
 dat$latitude <- dat$latitude / 1000 # to kms
