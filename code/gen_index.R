@@ -61,5 +61,4 @@ for(spp in 1:length(unique(dat$scientific_name))) {
       }
 } # end spp loop
 
-
 saveRDS(predictions_all, "indices/predicted_indices_sdmtmb.rds")
