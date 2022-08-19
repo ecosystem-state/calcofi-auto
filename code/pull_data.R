@@ -115,13 +115,14 @@ dat <- dplyr::filter(dat, scientific_name %in% c("Disintegrated fish larvae",
 # make the UTM cols spatial (X/Easting/lon, Y/Northing/lat)
 dat$latitude = dat$lat_dd = as.numeric(dat$latitude)
 dat$longitude = dat$lon_dd = as.numeric(dat$longitude)
-dat <-
-  st_as_sf(dat,
+
+dat_coords <-
+  st_as_sf(dat[,c("longitude", "latitude")],
            coords = c("longitude", "latitude"),
            crs = 4326)
-dat <- st_transform(x = dat, crs = 32610)
-dat$longitude = st_coordinates(dat)[, 1]
-dat$latitude = st_coordinates(dat)[, 2]
+dat_coords <- st_transform(x = dat_coords, crs = 32610)
+dat$longitude = st_coordinates(dat_coords)[, 1]
+dat$latitude = st_coordinates(dat_coords)[, 2]
 dat <- as.data.frame(dat)
 dat$longitude <- dat$longitude / 1000 # to kms
 dat$latitude <- dat$latitude / 1000 # to kms
