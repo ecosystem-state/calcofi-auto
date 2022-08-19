@@ -1,6 +1,5 @@
 library(dplyr)
 library(lubridate)
-library(sf)
 
 source("code/set_control_params.R")
 

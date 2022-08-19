@@ -34,7 +34,7 @@ jobs:
 
       - name: Install packages
         run:
-          Rscript -e "install.packages(c('sf','remotes','rerddap','dplyr','lubridate','sessioninfo'))"
+          Rscript -e "install.packages(c('sf','remotes','rerddap','dplyr','lubridate'))"
 
       - name: Create spp list
         run:

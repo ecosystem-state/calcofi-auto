@@ -2,11 +2,11 @@
 
 <!-- badges: start -->
 
-[![Make
-grid](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-grid/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
+[![Pull
+data](https://github.com/ecosystem-state/calcofi-auto/workflows/R-pull-data/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
 
-[![Species
-list](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-spp-list/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
+[![Make
+grid](https://github.com/ecosystem-state/calcofi-auto/workflows/R-gen-grid/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
 
 [![Estimate
 densities](https://github.com/ecosystem-state/calcofi-auto/workflows/R-make-indices/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
@@ -38,7 +38,7 @@ Estimated trends for the CalCOFI community
 
 <div class="figure">
 
-<img src="figures/loadings.jpeg" alt="Estimated loadings for the CalCOFI community" width="480" />
+<img src="figures/loadings.jpeg" alt="Estimated loadings for the CalCOFI community" width="528" />
 <p class="caption">
 Estimated loadings for the CalCOFI community
 </p>
@@ -47,7 +47,7 @@ Estimated loadings for the CalCOFI community
 
 <div class="figure">
 
-<img src="figures/fitted.jpeg" alt="Predicted and observed fits to the CalCOFI data" width="480" />
+<img src="figures/fitted.jpeg" alt="Predicted and observed fits to the CalCOFI data" width="720" />
 <p class="caption">
 Predicted and observed fits to the CalCOFI data
 </p>
