@@ -40,7 +40,7 @@ resolution <- pred_resolution
 dat$floor_lon <- floor(dat$longitude / resolution)
 dat$floor_lat <- floor(dat$latitude / resolution)
 dat$station <- paste(dat$floor_lon, dat$floor_lat)
-#
+# expand stations: years
 pred_grid <- expand.grid(
   station = unique(dat$station),
   year = unique(dat$year)
