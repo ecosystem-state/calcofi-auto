@@ -8,8 +8,7 @@ data](https://github.com/ecosystem-state/calcofi-auto/workflows/R-pull-data/badg
 [![Make
 grid](https://github.com/ecosystem-state/calcofi-auto/workflows/R-gen-grid/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
 
-[![Estimate
-indices](https://github.com/ecosystem-state/calcofi-auto/workflows/R-gen-indices/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
+[![R-gen-index](https://github.com/ecosystem-state/calcofi-auto/actions/workflows/R-gen-indices.yaml/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions/workflows/R-gen-indices.yaml)
 
 [![Run DFA
 models](https://github.com/ecosystem-state/calcofi-auto/workflows/R-run-dfa/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
