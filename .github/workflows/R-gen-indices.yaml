@@ -8,7 +8,7 @@ on:
         paths:
         - 'indices/pred_grid.rds'
         - 'code/set_control_params.R'
-        - 'code/gen_index_by_spp_sdmTMB.R'
+        - 'code/gen_index.R'
     # branches: [main, master]
   #pull_request:
     #branches: [main, master]
