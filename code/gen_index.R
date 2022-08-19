@@ -65,12 +65,3 @@ for(spp in 1:length(unique(dat$scientific_name))) {
 } # end spp loop
 
 saveRDS(predictions_all, "indices/predicted_indices_sdmtmb.rds")
-
-# Filter out experimental stations
-# https://calcofi.org/field-work/station-positions.html
-# stations <- read.csv("data/CalCOFIStationOrder.csv")
-# stations <- dplyr::rename(stations, station = Station)
-# dat <- dplyr::left_join(dat, stations[, c("station", "StaType")])
-# dat <- dplyr::filter(dat, StaType == "ROS")
-
-#"species"    "year"       "index"      "mean_cpue"  "n_pos_cpue"

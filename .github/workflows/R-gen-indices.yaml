@@ -3,7 +3,7 @@
 on:
   schedule:
   #    # * is a special character in YAML so you have to quote this string
-    - cron:  '0 0 1 1,4,7,10 *'
+    - cron:  '0 0 3 1,7 *'
   push:
         paths:
         - 'indices/pred_grid.rds'
@@ -13,7 +13,7 @@ on:
   #pull_request:
     #branches: [main, master]
 
-name: R-make-indices
+name: R-gen-index
 
 jobs:
   gen-index:
@@ -29,7 +29,7 @@ jobs:
           Rscript -e "install.packages(c('remotes','rerddap','sdmTMB','dplyr','lubridate','sf','tidyr','purrr','sessioninfo'))"
       - name: Create species specific indices
         run:
-          Rscript -e "source('code/gen_index_by_spp_sdmTMB.R')"
+          Rscript -e "source('code/gen_index.R')"
       - name: Commit results
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
