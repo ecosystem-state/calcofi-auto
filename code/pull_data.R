@@ -67,9 +67,6 @@ for (i in 1:length(calcofi_erddap)) {
 
     # do lat / lon processing and add UTM
     station_dat$file = calcofi_erddap[i]
-    #station_dat <- dplyr::group_by(station_dat, scientific_name) %>%
-    #  dplyr::summarize(tot_cpue = sum(larvae_10m2),
-    #                   erddap = file[1])
 
     if (i == 1) {
       dat <- station_dat
