@@ -3,7 +3,7 @@
 on:
   schedule:
   #    # * is a special character in YAML so you have to quote this string
-    - cron:  '0 0 3 1,7 *'
+    - cron:  '0 0 3 1,4,7,10 *'
   push:
         paths:
         - 'indices/pred_grid.rds'
@@ -27,7 +27,7 @@ jobs:
 
       - name: Install package dependencies
         run:
-          Rscript -e "install.packages(c('remotes','dplyr','lubridate','tidyr'))"
+          Rscript -e "install.packages(c('remotes','dplyr','lubridate','tidyr','usethis'))"
 
       - name: Install INLA
         run:

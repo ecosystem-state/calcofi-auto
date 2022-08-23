@@ -3,7 +3,7 @@
 on:
   schedule:
   #    # * is a special character in YAML so you have to quote this string
-    - cron:  '0 0 2 1,7 *'
+    - cron:  '0 0 2 1,4,7,10 *'
   push:
        paths:
        - 'code/set_control_params.R'
@@ -25,7 +25,7 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - name: Install package dependencies
         run:
-          Rscript -e "install.packages(c('dplyr','lubridate'))"
+          Rscript -e "install.packages(c('dplyr','lubridate','usethis'))"
       - name: Create prediction grid
         run:
           Rscript -e "source('code/gen_pred_grid.R')"

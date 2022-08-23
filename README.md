@@ -2,9 +2,6 @@
 
 <!-- badges: start -->
 
-[![Pull
-data](https://github.com/ecosystem-state/calcofi-auto/workflows/R-pull-data/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
-
 [![Make
 grid](https://github.com/ecosystem-state/calcofi-auto/workflows/R-gen-grid/badge.svg)](https://github.com/ecosystem-state/calcofi-auto/actions)
 
