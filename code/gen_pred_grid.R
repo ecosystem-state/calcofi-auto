@@ -1,12 +1,16 @@
 library(dplyr)
 library(lubridate)
 library(usethis)
+library(curl)
 
 source("code/set_control_params.R")
 
-url_str <- "https://github.com/ecosystem-state/ecodata/blob/main/inst/calcofi_index_data.rds"
-usethis::use_github_file(url_str,
-                         save_as = "data/index_data.rds")
+#url_str <- "https://github.com/ecosystem-state/ecodata/blob/main/inst/calcofi_index_data.rds"
+#usethis::use_github_file(url_str,
+#                         save_as = "data/index_data.rds")
+
+githubURL <- ("https://raw.githubusercontent.com/ecosystem-state/ecodata/main/inst/calcofi_index_data.rds")
+download.file(githubURL,"data/index_data.rds", method="curl")
 
 dat = readRDS("data/index_data.rds")
 
