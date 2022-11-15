@@ -23,8 +23,9 @@ dat$ts <- as.numeric(as.factor(dat$species))
 fit <- fit_dfa(y = dat,
                  num_trends = 2,
                  data_shape="long",
-                 trend_model = "ps",
-                 n_knots = 20,
+                 trend_model  = "rw",
+                 #trend_model = "ps", # change from ps
+                 #n_knots = 20,
                  iter=3000,
                  chains=3)
 r <- rotate_trends(fit)
