@@ -20,9 +20,9 @@ collected 1985 - present.
 
 If you’re looking for data:  
 \* time series (with uncertainty) are in
-indices/predicted_indices_sdmtmb.rds  
-\* the prediction grid is in indices/pred_grid.rds  
-\* estimated DFA trends are in data/index_data.rds
+[indices/predicted_indices_sdmtmb.rds](https://github.com/ecosystem-state/calcofi-auto/blob/main/indices/predicted_indices_sdmtmb.rds)  
+\* the prediction grid is in [indices/pred_grid.rds](https://github.com/ecosystem-state/calcofi-auto/blob/main/indices/pred_grid.rds)  
+\* estimated DFA trends are in [data/index_data.rds](https://github.com/ecosystem-state/calcofi-auto/blob/main/data/index_data.rds)
 
 ## Results
 
