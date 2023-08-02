@@ -31,11 +31,11 @@ jobs:
 
       - name: Install INLA
         run:
-          Rscript -e "install.packages('INLA', repos=c(getOption('repos'), INLA='https://inla.r-inla-download.org/R/testing'), dep=TRUE)"
+          Rscript -e "install.packages('INLA', repos=c(getOption('repos'), INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"
 
       - name: Install sdmTMB
         run:
-          Rscript -e "remotes::install_github('pbs-assess/sdmTMB')"
+          Rscript -e "install.packages(c('sdmTMB'))"
 
       - name: Create species specific indices
         run:
