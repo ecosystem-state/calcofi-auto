@@ -28,7 +28,8 @@ dat_long <- dplyr::filter(dat_long, year >= 1985)
 
 species_to_keep <- dplyr::group_by(dat_long, species) |>
   dplyr::summarise(n = length(unique(year[which(count>0)]))) |>
-  dplyr::filter(n == length(unique(dat_long$year))) |>
+  dplyr::filter(n > 30) |>
+  #dplyr::filter(n == length(unique(dat_long$year))) |>
   dplyr::arrange(desc(n))
 
 # filter to species with enough years
@@ -64,7 +65,9 @@ for(spp in 1:nrow(df)) {
 
     dat_summary$fyear = as.factor(dat_summary$year)
     #newdat$present = ifelse(newdat$larvae_10m2 > 0, 1, 0)
-    m <- sdmTMB::sdmTMB(count ~ -1 + season + fyear,
+    m <- sdmTMB::sdmTMB(count ~ 0 + season,
+        time_varying = ~ 1,
+        time_varying_type = "ar1",
         spatiotemporal = "iid",
         time="year",
         spatial="on",
@@ -97,12 +100,12 @@ for(spp in 1:nrow(df)) {
         index$index <- "Total"
         
         index_all <- rbind(index_inshore, index_offshore, index)
-        index$species <- newdat$species[1]
+        index_all$species <- newdat$species[1]
 
         if(spp == 1) {
-          predictions_all = index
+          predictions_all = index_all
         } else {
-          predictions_all = rbind(predictions_all, index)
+          predictions_all = rbind(predictions_all, index_all)
         }
         saveRDS(predictions_all, "indices/predicted_indices_sdmtmb_newdata.rds")
       }
@@ -114,17 +117,87 @@ for(spp in 1:nrow(df)) {
 library(viridis)
 library(ggplot2)
 
-predicted_indices_sdmtmb <- readRDS("~/Documents/Github projects/calcofi-auto/indices/predicted_indices_sdmtmb.rds")
+predicted_indices_sdmtmb <- readRDS("indices/predicted_indices_sdmtmb_newdata.rds")
 
-ggplot(predicted_indices_sdmtmb, aes(x = year, y = est)) +
+
+
+dplyr::filter(predicted_indices_sdmtmb, index=="Total") |>
+  dplyr::group_by(species) |>
+  dplyr::mutate(maxy = max(upr)) |>
+  dplyr::ungroup() |>
+ggplot(aes(x = year, y = est)) +
+  geom_rect(aes(xmin=2013, xmax=2023, ymin=0, ymax=maxy), fill="red",alpha=0.01) + 
   geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2, fill = viridis(1)) +
   geom_line(col = viridis(1)) +
   labs(
     x = "Year",
     y = "Predicted index") +
   theme_bw() + 
-  facet_wrap(~ species, scales = "free_y")
-ggsave("figures/biomass_estimates_1985_2019.png", width = 10, height = 6)
+  facet_wrap(~ species, scales = "free_y")  + 
+  theme(strip.background =element_rect(fill="white"),
+        strip.text = element_text(size = 4, colour = "black"))
+ggsave("figures/biomass_estimates_1985_2023_newdata.png", width = 10, height = 6)
+
+
+dplyr::filter(predicted_indices_sdmtmb, index=="Inshore") |>
+  dplyr::group_by(species) |>
+  dplyr::mutate(maxy = max(upr)) |>
+  dplyr::ungroup() |>
+  ggplot(aes(x = year, y = est)) +
+  geom_rect(aes(xmin=2013, xmax=2023, ymin=0, ymax=maxy), fill="red",alpha=0.01) + 
+  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2, fill = viridis(1)) +
+  geom_line(col = viridis(1)) +
+  labs(
+    x = "Year",
+    y = "Predicted inshore index") +
+  theme_bw() + 
+  facet_wrap(~ species, scales = "free_y") + 
+  theme(strip.background =element_rect(fill="white"),
+        strip.text = element_text(size = 4, colour = "black"))
+ggsave("figures/biomass_estimates_1985_2023_newdata_inshore.png", width = 10, height = 6)
+
+
+dplyr::filter(predicted_indices_sdmtmb, index=="Offshore") |>
+  dplyr::group_by(species) |>
+  dplyr::mutate(maxy = max(upr)) |>
+  dplyr::ungroup() |>
+  ggplot(aes(x = year, y = est)) +
+  geom_rect(aes(xmin=2013, xmax=2023, ymin=0, ymax=maxy), fill="red",alpha=0.01) + 
+  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2, fill = viridis(1)) +
+  geom_line(col = viridis(1)) +
+  labs(
+    x = "Year",
+    y = "Predicted offshore index") +
+  theme_bw() + 
+  facet_wrap(~ species, scales = "free_y") + 
+  theme(strip.background =element_rect(fill="white"),
+        strip.text = element_text(size = 4, colour = "black"))
+ggsave("figures/biomass_estimates_1985_2023_newdata_offshore.png", width = 10, height = 6)
+
+
+offshore <- dplyr::filter(predicted_indices_sdmtmb, index=="Offshore") |>
+  dplyr::rename(offshore_est = est)
+inshore <- dplyr::filter(predicted_indices_sdmtmb, index=="Inshore") |>
+  dplyr::rename(inshore_est = est)
+dplyr::left_join(offshore[,c("year","species","offshore_est")], inshore[,c("year","species","inshore_est")]) |>
+  dplyr::group_by(species) |>
+  dplyr::mutate(maxy = max(inshore_est/(inshore_est+offshore_est)),
+                miny = min(inshore_est/(inshore_est+offshore_est))) |>
+  dplyr::ungroup() |>
+  ggplot(aes(x = year, y = inshore_est/(inshore_est+offshore_est))) +
+  geom_rect(aes(xmin=2013, xmax=2023, ymin=miny, ymax=maxy), fill="red",alpha=0.01) + 
+  #geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2, fill = viridis(1)) +
+  geom_line(col = viridis(1)) +
+  labs(
+    x = "Year",
+    y = "Proportion inshore") +
+  theme_bw() + 
+  facet_wrap(~ species, scales = "free_y") + 
+  theme(strip.background =element_rect(fill="white"),
+        strip.text = element_text(size = 4, colour = "black"))
+ggsave("figures/biomass_estimates_1985_2023_newdata_p_inshore.png", width = 10, height = 6)
+
+
 
 ggplot(predicted_indices_sdmtmb, aes(x = year, y = log_est)) +
   geom_ribbon(aes(ymin = log_est-2*se, ymax = log_est+2*se), alpha = 0.2,fill = viridis(1)) +
