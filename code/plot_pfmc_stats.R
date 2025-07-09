@@ -59,3 +59,53 @@ ggplot(d_agg, aes(x = year, y = tot_weight)) +
   theme_minimal() + 
   facet_wrap(~ species, scale="free_y")
 ggsave("figures/pfmc_revenue_by_species.png", width = 10, height = 6)
+
+
+
+
+
+d <- read.csv("data/GMT001-1985---2025.csv")
+d <- dplyr::rename(d, year = LANDING_YEAR,
+                   species = COMMON_NAME) |>
+  dplyr::select(year, species, TOTAL_LANDED_WEIGHT_MTONS,
+                TOTAL_EXVESSEL_REVENUE)
+
+# filter out things with at least 25 years of data
+d <- dplyr::group_by(d, species) |>
+  dplyr::filter(dplyr::n() >= 25) |>
+  dplyr::ungroup()
+
+dplyr::filter(d, species %in% c("__ALL FLATFISH",
+                                "__ALL GROUNDFISH",
+                                "__ALL ROCKFISH",
+                                "__ALL ROUNDFISH")) |>
+  ggplot(aes(year,TOTAL_LANDED_WEIGHT_MTONS, group = species)) + 
+  geom_rect(aes(xmin = 2013, xmax = 2024, ymin = -Inf, ymax = Inf), 
+            fill = "red", alpha = 0.01) + 
+  geom_line() + facet_wrap(~ species, scales = "free_y") + 
+  theme_bw() + 
+  xlab("Year") + 
+  ylab("Landed weight (mt)")
+ggsave("figures/pfmc_gfish_wt_aggregates.png", width = 10, height = 6)
+
+
+spec_names <- unique(d$species)
+spec_names <- spec_names[-grep("UNSP", spec_names)]
+spec_names <- spec_names[-grep("__", spec_names)]
+spec_names <- spec_names[-grep("NOM.", spec_names)]
+
+d <- dplyr::filter(d, species %in% spec_names) 
+
+dplyr::group_by(d, species) |>
+  dplyr::mutate(sum_w = sum(TOTAL_LANDED_WEIGHT_MTONS)) |>
+  dplyr::filter(sum_w > 10000) |>
+  ungroup() |>
+  ggplot(aes(year,TOTAL_LANDED_WEIGHT_MTONS, group = species)) + 
+  geom_rect(aes(xmin = 2013, xmax = 2024, ymin = -Inf, ymax = Inf), 
+            fill = "red", alpha = 0.01) + 
+  geom_line() + facet_wrap(~ species, scales = "free_y") + 
+  theme_bw() + 
+  xlab("Year") + 
+  ylab("Landed weight (mt)")
+ggsave("figures/pfmc_gfish_wt_species.png", width = 10, height = 6)
+
